@@ -6,6 +6,7 @@
 moc_*.cpp
 qrc_*.cpp
 ui_*.h
+.qmake.stash
 
 
 #################
@@ -46,6 +47,7 @@ Makefile
 *.so
 *.a
 app/cutemarked
+build*
 
 #################
 ## Visual Studio
@@ -170,6 +172,8 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
+test/integration/integrationtest
+test/unit/unittest
 
 #Translations
 *.mo
