@@ -287,6 +287,8 @@ void OptionsDialog::readState()
     ui->sizeComboBox->setCurrentText(QString().setNum(font.pointSize()));
     ui->sourceSingleSizedCheckBox->setChecked(options->isSourceAtSingleSizeEnabled());
     ui->tabWidthSpinBox->setValue(options->tabWidth());
+    ui->indentWithSpacesCheckBox->setChecked(options->indentWithSpaces());
+    ui->keepIndentationCheckBox->setChecked(options->keepIndentation());
     ui->lineColumnCheckBox->setChecked(options->isLineColumnEnabled());
     ui->rulerEnableCheckBox->setChecked(options->isRulerEnabled());
     ui->rulerPosSpinBox->setValue(options->rulerPos());
@@ -337,6 +339,8 @@ void OptionsDialog::saveState()
     options->setEditorFont(font);
     options->setSourceAtSingleSizeEnabled(ui->sourceSingleSizedCheckBox->isChecked());
     options->setTabWidth(ui->tabWidthSpinBox->value());
+    options->setIndentWithSpaces(ui->indentWithSpacesCheckBox->isChecked());
+    options->setKeepIndentation(ui->keepIndentationCheckBox->isChecked());
     options->setLineColumnEnabled(ui->lineColumnCheckBox->isChecked());
     options->setRulerEnabled(ui->rulerEnableCheckBox->isChecked());
     options->setRulerPos(ui->rulerPosSpinBox->value());

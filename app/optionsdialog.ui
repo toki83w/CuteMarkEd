@@ -194,6 +194,20 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="indentWithSpacesCheckBox">
+            <property name="text">
+             <string>Use spaces instead of tabs</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="keepIndentationCheckBox">
+            <property name="text">
+             <string>Keep indentation of previous line</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>

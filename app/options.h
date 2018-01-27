@@ -44,6 +44,12 @@ public:
 
     int tabWidth() const;
     void setTabWidth(int width);
+    
+    bool indentWithSpaces() const;
+    void setIndentWithSpaces(bool use);
+    
+    bool keepIndentation() const;
+    void setKeepIndentation(bool keep);
 
     bool isLineColumnEnabled() const;
     void setLineColumnEnabled(bool enabled);
@@ -159,6 +165,8 @@ signals:
     void editorFontChanged(const QFont &font);
     void editorStyleChanged();
     void tabWidthChanged(int tabWidth);
+    void indentWithSpacesChanged(bool use);
+    void keepIndentationChanged(bool keep);
     void lineColumnEnabledChanged(bool enabled);
     void rulerEnabledChanged(bool enabled);
     void rulerPosChanged(int pos);
@@ -172,6 +180,8 @@ private:
 private:
     QFont font;
     int m_tabWidth;
+    bool m_indentWithSpaces;
+    bool m_keepIndentation;
     ProxyMode m_proxyMode;
     QString m_proxyHost;
     quint16 m_proxyPort;

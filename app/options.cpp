@@ -26,6 +26,8 @@ static const char* FONT_FAMILY_DEFAULT = "Monospace";
 static const char* FONT_FAMILY = "editor/font/family";
 static const char* FONT_SIZE = "editor/font/size";
 static const char* TAB_WIDTH = "editor/tabwidth";
+static const char* INDENT_WITH_SPACES = "editor/indentwithspaces";
+static const char* KEEP_INDENTATION = "editor/keepindentation";
 static const char* LINECOLUMN_ENABLED = "editor/linecolumn/enabled";
 static const char* RULER_ENABLED = "editor/ruler/enabled";
 static const char* RULER_POS = "editor/ruler/pos";
@@ -125,6 +127,28 @@ void Options::setTabWidth(int width)
 {
     m_tabWidth = width;
     emit tabWidthChanged(width);
+}
+
+bool Options::indentWithSpaces() const
+{
+    return m_indentWithSpaces;
+}
+
+void Options::setIndentWithSpaces(bool use)
+{
+    m_indentWithSpaces = use;
+    emit indentWithSpacesChanged(use);
+}
+
+bool Options::keepIndentation() const
+{
+    return m_keepIndentation;
+}
+
+void Options::setKeepIndentation(bool keep)
+{
+    m_keepIndentation = keep;
+    emit keepIndentationChanged(keep);
 }
 
 bool Options::isLineColumnEnabled() const
@@ -493,6 +517,8 @@ void Options::readSettings()
     int fontSize = settings.value(FONT_SIZE, 10).toInt();
 
     m_tabWidth = settings.value(TAB_WIDTH, 8).toInt();
+    m_indentWithSpaces = settings.value(INDENT_WITH_SPACES, true).toBool();
+    m_keepIndentation = settings.value(KEEP_INDENTATION, true).toBool();
     m_lineColumnEnabled = settings.value(LINECOLUMN_ENABLED, false).toBool();
     m_rulerEnabled = settings.value(RULER_ENABLED, false).toBool();
     m_rulerPos = settings.value(RULER_POS, 80).toInt();
@@ -567,6 +593,8 @@ void Options::writeSettings()
     settings.setValue(FONT_FAMILY, font.family());
     settings.setValue(FONT_SIZE, font.pointSize());
     settings.setValue(TAB_WIDTH, m_tabWidth);
+    settings.setValue(INDENT_WITH_SPACES, m_indentWithSpaces);
+    settings.setValue(KEEP_INDENTATION, m_keepIndentation);
     settings.setValue(LINECOLUMN_ENABLED, m_lineColumnEnabled);
     settings.setValue(RULER_ENABLED, m_rulerEnabled);
     settings.setValue(RULER_POS, m_rulerPos);

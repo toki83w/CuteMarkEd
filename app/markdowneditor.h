@@ -63,6 +63,8 @@ protected:
 
 public slots:
     void tabWidthChanged(int tabWidth);
+    void indentWithSpacesChanged(bool useSpaces);
+    void keepIndentationChanged(bool keep);
     void editorFontChanged(const QFont &font);
     void rulerEnabledChanged(bool enabled);
     void rulerPosChanged(int pos);
@@ -95,6 +97,9 @@ private:
     bool showHardLinebreaks;
     bool rulerEnabled;
     int rulerPos;
+    int tabWidth;
+    bool indentWithSpaces;
+    bool keepIndentation;
 };
 
 #endif // MARKDOWNEDITOR_H

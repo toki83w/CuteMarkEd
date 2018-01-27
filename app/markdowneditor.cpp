@@ -56,7 +56,10 @@ MarkdownEditor::MarkdownEditor(QWidget *parent) :
     lineNumberArea(new LineNumberArea(this)),
     spellChecker(new SpellChecker()),
     completer(0),
-    showHardLinebreaks(false)
+    showHardLinebreaks(false),
+    tabWidth(4),
+    indentWithSpaces(true),
+    keepIndentation(true)
 {
     highlighter = new MarkdownHighlighter(this->document(), spellChecker);
 
@@ -203,7 +206,64 @@ void MarkdownEditor::keyPressEvent(QKeyEvent *e)
            break;
        }
     }
-
+    
+    else {
+        switch (e->key()) {
+        case Qt::Key_Tab: {
+            // indent with spaces/tabs
+            e->accept();
+            
+            auto tc = textCursor();
+            
+            if (e->modifiers() == Qt::NoModifier)
+                tc.insertText(indentWithSpaces ? QString(tabWidth, ' ') : QString("\t"));
+            else if (e->modifiers() == Qt::ControlModifier)
+                tc.insertText("\t");
+            
+            return;
+        }
+        
+        case Qt::Key_Backtab: {
+            // unindent at current position
+            e->accept();
+            
+            auto tc = textCursor();
+            auto t = tc.block().text().left(tc.positionInBlock());
+            
+            if (t.endsWith('\t'))
+                tc.deletePreviousChar();
+            else for (int i = 0; i < tabWidth; ++i) {
+                if (t.endsWith(' ')) {
+                    tc.deletePreviousChar();
+                    t.chop(1);
+                }
+                else
+                    break;
+            }
+            
+            return;
+        }
+            
+        case Qt::Key_Enter:
+        case Qt::Key_Return: {
+            // keep indentation
+            // TODO: option
+            e->accept();
+            
+            auto tc = textCursor();
+            tc.insertText("\n");
+            
+            if (keepIndentation) {
+                const auto t = tc.block().text();
+                const int pos = t.indexOf(QRegExp("\\S"));
+                tc.insertText(t.left(pos));
+            }
+            
+            return;
+        }
+        }
+    }
+    
     if (completer)
         completer->hidePopup();
 
@@ -254,7 +314,18 @@ void MarkdownEditor::editorFontChanged(const QFont &font)
 void MarkdownEditor::tabWidthChanged(int tabWidth)
 {
     QFontMetrics fm(font());
+    this->tabWidth = tabWidth;
     setTabStopWidth(tabWidth*fm.width(' '));
+}
+
+void MarkdownEditor::indentWithSpacesChanged(bool useSpaces)
+{
+    indentWithSpaces = useSpaces;
+}
+
+void MarkdownEditor::keepIndentationChanged(bool keep)
+{
+    keepIndentation = keep;
 }
 
 void MarkdownEditor::rulerEnabledChanged(bool enabled)

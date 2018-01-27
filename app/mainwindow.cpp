@@ -138,6 +138,8 @@ void MainWindow::initializeApp()
     lastUsedTheme();
 
     ui->plainTextEdit->tabWidthChanged(options->tabWidth());
+    ui->plainTextEdit->indentWithSpacesChanged(options->indentWithSpaces());
+    ui->plainTextEdit->keepIndentationChanged(options->keepIndentation());
     ui->plainTextEdit->rulerEnabledChanged(options->isRulerEnabled());
     ui->plainTextEdit->rulerPosChanged(options->rulerPos());
 
@@ -1055,6 +1057,10 @@ void MainWindow::setupMarkdownEditor()
             ui->plainTextEdit, &MarkdownEditor::editorFontChanged);
     connect(options, &Options::tabWidthChanged,
             ui->plainTextEdit, &MarkdownEditor::tabWidthChanged);
+    connect(options, &Options::indentWithSpacesChanged,
+            ui->plainTextEdit, &MarkdownEditor::indentWithSpacesChanged);
+    connect(options, &Options::keepIndentationChanged,
+            ui->plainTextEdit, &MarkdownEditor::keepIndentationChanged);
     connect(options, &Options::rulerEnabledChanged,
             ui->plainTextEdit, &MarkdownEditor::rulerEnabledChanged);
     connect(options, &Options::rulerPosChanged,
